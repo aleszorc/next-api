@@ -1,4 +1,4 @@
-import useRef from 'react';
+import { useRef } from 'react';
 
 function HomePage() {
   const emailInputRef = useRef();
@@ -9,7 +9,17 @@ function HomePage() {
     const enteredEmail = emailInputRef.current.value;
     const enteredFeedback = feedbackInputRef.current.value;
 
-    fetch();
+    const reqBody = { email: enteredEmail, text: enteredFeedback };
+
+    fetch('/api/feedback', {
+      method: 'POST',
+      body: JSON.stringify(reqBody),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   }
 
   return (
